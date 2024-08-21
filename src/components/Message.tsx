@@ -10,16 +10,19 @@ interface MessageProps {
 
 export const Message = ({ role, content, isLoading }: MessageProps) => {
   return (
-    <div className="w-full bg-white/80 rounded-lg flex gap-4 p-5">
-      <Image
-        alt={`${role} Profile Pic`}
-        className="size-[20px] md:size-[40px]"
-        width={40}
-        height={40}
-        src={role === "user" ? "/User.png" : "/Patricio.png"}
-      />
-      <div className="w-full">
+    <div className="w-full bg-white/80 rounded-lg flex flex-col gap-4 p-5">
+      <div className="flex items-center gap-2">
+        <div>
+          <Image
+            alt={`${role} Profile Pic`}
+            width={40}
+            height={40}
+            src={role === "user" ? "/User.png" : "/Patricio.png"}
+          />
+        </div>
         <strong>{role === "user" ? "Tú" : "Patricio"}</strong>
+      </div>
+      <div className="w-full space-y-4">
         {isLoading && role !== "user" && !content.length ? (
           <span>...</span>
         ) : (
