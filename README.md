@@ -22,4 +22,4 @@ Asistente de IA para programadores con temática de patito de goma (Rubber ducki
 7. Visitar `http://localhost:3000/`
 8. ¡Listo! Hora de chatear con Patricio
 
-![Alt Text](./public/Patricio%20v1.gif)
+![Alt Text](./public/Patricio-preview.gif)
