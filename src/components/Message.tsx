@@ -29,19 +29,19 @@ export const Message = ({ role, content, isLoading }: MessageProps) => {
           <Markdown
             components={{
               code(props) {
-                const { children, className, node, ...rest } = props;
+                const { children, className, node, style, ref, ...rest } =
+                  props;
                 const match = /language-(\w+)/.exec(className || "");
 
                 return match ? (
                   <SyntaxHighlighter
-                    {...rest}
                     language={match[1]}
                     PreTag="div"
-                    showLineNumbers
                     customStyle={{
                       margin: 0,
                       padding: "1.5rem 1rem",
                     }}
+                    {...rest}
                   >
                     {String(children).replace(/\n$/, "")}
                   </SyntaxHighlighter>
