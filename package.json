@@ -9,15 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ai-sdk/google": "^1.0.0",
-    "@google/generative-ai": "^0.17.0",
-    "ai": "^3.4.33",
+    "@ai-sdk/google": "^2.0.17",
+    "@ai-sdk/react": "^2.0.60",
+    "@google/generative-ai": "^0.24.1",
+    "ai": "^5.0.60",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
     "react-syntax-highlighter": "^15.6.1",
-    "react-textarea-autosize": "^8.5.3"
+    "react-textarea-autosize": "^8.5.3",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@types/node": "^20",

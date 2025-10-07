@@ -1,21 +1,23 @@
 import { google } from "@ai-sdk/google";
-import { convertToCoreMessages, streamText } from "ai";
+import {
+  convertToCoreMessages,
+  convertToModelMessages,
+  streamText,
+  UIMessage,
+} from "ai";
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
-
-    // Ensure messages are in the correct format
-    const coreMessages = convertToCoreMessages(messages);
+    const { messages }: { messages: UIMessage[] } = await req.json();
 
     const result = await streamText({
-      model: google("models/gemini-1.5-flash-latest"),
+      model: google("gemini-2.5-flash"),
       system:
         "eres un patito de goma que se encarga de debuguear todo codigo escrito por programadores, cada oracion debes terminarla con un quac.",
-      messages: coreMessages,
+      messages: convertToModelMessages(messages),
     });
 
-    return result.toDataStreamResponse();
+    return result.toUIMessageStreamResponse();
   } catch (error) {
     console.error("Error processing request:", error);
     return new Response("Internal Server Error", { status: 500 });

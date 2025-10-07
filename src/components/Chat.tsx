@@ -1,16 +1,21 @@
 "use client";
 
-import { useChat } from "ai/react";
-import { Message } from "./Message";
-import { useEffect, useRef } from "react";
+import { useChat } from "@ai-sdk/react";
+import { Message, MessagePart } from "./Message";
+import { useEffect, useRef, useState } from "react";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import { Send } from "@/icons/Send";
 import Image from "next/image";
 import Link from "next/link";
+import { DefaultChatTransport } from "ai";
 
 export const Chat = () => {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat();
+  const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/api/chat",
+    }),
+  });
+  const [input, setInput] = useState("");
   const messageContainer = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -49,8 +54,12 @@ export const Chat = () => {
             <Message
               key={message.id}
               role={message.role}
-              content={message.content}
-              isLoading={isLoading}
+              content={
+                message.parts.filter(
+                  (part: any) => part.type === "text"
+                ) as MessagePart[]
+              }
+              isLoading={status === "ready"}
             />
           ))}
         </div>
@@ -58,19 +67,25 @@ export const Chat = () => {
       <div className="w-full max-w-2xl mx-auto p-5 text-center">
         <form
           className="p-3 pl-6 rounded-lg bg-slate-100 flex justify-center items-center mb-4"
-          onSubmit={handleSubmit}
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (input.trim()) {
+              sendMessage({ text: input });
+              setInput("");
+            }
+          }}
         >
           <ReactTextareaAutosize
             className="w-full bg-transparent resize-none"
             maxRows={3}
             name="prompt"
             value={input}
-            onChange={handleInputChange}
+            onChange={(e) => setInput(e.target.value)}
             placeholder="Escribe tus dudas aquí..."
-            disabled={isLoading}
+            disabled={status !== "ready"}
           />
           <button
-            disabled={isLoading}
+            disabled={status !== "ready"}
             type="submit"
             className="size-9 transition-colors hover:bg-slate-200 rounded-full flex items-center justify-center"
           >
