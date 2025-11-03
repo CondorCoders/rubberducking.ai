@@ -25,7 +25,7 @@ export const Message = ({ role, content, isLoading }: MessageProps) => {
             src={role === "user" ? "/User.png" : "/Patricio.png"}
           />
         </div>
-        <strong>{role === "user" ? "Tú" : "Patricio"}</strong>
+        <strong>{role === "user" ? "Yo" : "Patricio"}</strong>
       </div>
       <div className="w-full space-y-4">
         {isLoading && role !== "user" && !content.length ? (
